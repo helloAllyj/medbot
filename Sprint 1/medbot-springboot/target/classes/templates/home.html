@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to MedBot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+        }
+        p {
+            font-size: 1.2rem;
+        }
+        .button-container {
+            margin-top: 30px;
+        }
+        .btn {
+            background-color: #d63384;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #b02a6b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to MedBot</h1>
+    <p>Your personal medication assistant</p>
+    <div class="button-container">
+        <a href="/register" class="btn">Register</a>
+        <a href="/login" class="btn">Sign In</a>
+    </div>
+</body>
+</html>
