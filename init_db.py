@@ -2,7 +2,10 @@ import sqlite3
 import os
 
 os.makedirs('database', exist_ok=True)
-conn = sqlite3.connect(os.path.join('database', 'medbot.db'))
+
+db_path = os.path.join('database', 'medbot.db')
+conn = sqlite3.connect(db_path)
+
 
 conn.execute('''
 CREATE TABLE IF NOT EXISTS medications (
@@ -11,6 +14,19 @@ CREATE TABLE IF NOT EXISTS medications (
 )
 ''')
 
+conn.execute('''
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    role TEXT NOT NULL,
+    first_name TEXT,
+    last_name TEXT,
+    age INTEGER
+)
+''')
+
 conn.commit()
 conn.close()
-print("Database initialized.")
+
+print("Database initialized: medbot.db with updated users table")
