@@ -1,8 +1,8 @@
 My groupmembers are:
-- XXXX
-- XXXX
-- XXXX
-- XXXX
+- Amy Bottu
+- Ally Juarez
+- Cody Howk
+- Michael Plumley
 
 
 ------------------ Fill in some information about your project under this ------------------
