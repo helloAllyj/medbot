@@ -2,29 +2,39 @@
 <html>
 <head>
     <title>MedBot Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h2>Login</h2>
-    <form method="POST">
-        <label for="user_type">Login as:</label>
-        <select name="user_type" id="user_type" required>
-            <option value="">--Select--</option>
-            <option value="patient">Patient</option>
-            <option value="provider">Provider</option>
-        </select><br><br>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Login</h2>
 
-        <label>Username:</label>
-        <input type="text" name="username" required><br>
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
 
-        <label>Password:</label>
-        <input type="password" name="password" required><br>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="user_type" class="form-label">Login as</label>
+                <select class="form-select" name="user_type" id="user_type" required>
+                    <option value="">-- Select --</option>
+                    <option value="patient">Patient</option>
+                    <option value="provider">Provider</option>
+                </select>
+            </div>
 
-        <button type="submit">Login</button>
-    </form>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" required>
+            </div>
 
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
-    {% endif %}
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+    </div>
 </body>
 </html>
 
