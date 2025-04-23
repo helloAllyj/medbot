@@ -8,10 +8,11 @@ app.secret_key = 'your-secret-key'
 def get_user(username):
     conn = sqlite3.connect('database/medbot.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, password_hash, role, first_name, last_name FROM users WHERE username = ?", (username,))
+    cursor.execute("SELECT id, username, password_hash, role, first_name, last_name, dob, license_id, phone_number FROM users WHERE username = ?", (username,))
     user = cursor.fetchone()
     conn.close()
     return user
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -69,8 +70,8 @@ def register():
         license_id = request.form['license_id'] if role == 'provider' else None
         username = request.form['username']
         password = request.form['password']
-        phone_number = request.form[phone_number]
-
+        phone_number= request.form['phone_number']
+        
         if not username or not password or not role or not first_name or not last_name:
             error = "All fields are required."
         elif len(password) > 20:
@@ -89,9 +90,9 @@ def register():
                 password_hash = generate_password_hash(password)
 
                 cursor.execute("""
-                    INSERT INTO users (username, password_hash, role, first_name, last_name, dob)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                """, (username, password_hash, role, first_name, last_name, dob))
+                    INSERT INTO users (username, password_hash, role, first_name, last_name, dob,license_id, phone_number)
+                    VALUES (?, ?, ?, ?, ?, ?,?,?)
+                """, (username, password_hash, role, first_name, last_name, dob,license_id,phone_number))
                 
                 conn.commit()
                 conn.close()

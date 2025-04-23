@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS users (
     role TEXT NOT NULL,
     first_name TEXT,
     last_name TEXT,
-    age INTEGER
+    dob TEXT,
+    license_id TEXT,
     phone_number TEXT
 )
 ''')
