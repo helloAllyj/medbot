@@ -54,6 +54,11 @@
                 <input type="password" class="form-control" name="password" required>
             </div>
 
+             <div class="mb-3">
+                <label for="phone_number" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" name="phone_number" required pattern="^\+?[\d\s\(\)-]{7,15}$" title="Invalid Phone Number">
+            </div>
+
             <button type="submit" class="btn btn-primary w-100">Register</button>
         </form>
     </div>
