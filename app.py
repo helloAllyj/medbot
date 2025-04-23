@@ -69,6 +69,7 @@ def register():
         license_id = request.form['license_id'] if role == 'provider' else None
         username = request.form['username']
         password = request.form['password']
+        phone_number = request.form[phone_number]
 
         if not username or not password or not role or not first_name or not last_name:
             error = "All fields are required."
