@@ -52,6 +52,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- Navbar with avatar dropdown -->
     <nav class="navbar navbar-light bg-white shadow-sm">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h4">MedBot Patient Dashboard</span>
@@ -71,6 +72,7 @@
         <h2 class="text-center mb-5 dashboard-title">Welcome, {{ full_name }}!</h2>
         <div class="row justify-content-center g-4">
 
+    
             <div class="col-md-4">
                 <div class="card text-center p-4">
                     <div class="icon"><i class="fas fa-bell"></i></div>
@@ -79,28 +81,13 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card text-center p-4">
-                    <div class="icon"><i class="fas fa-user-edit"></i></div>
-                    <h5 class="card-title">Edit Profile</h5>
-                    <a href="/edit_profile" class="btn btn-outline-primary">Go</a>
-                </div>
-            </div>
-
+           
             <div class="col-md-4">
                 <div class="card text-center p-4">
                     <div class="icon"><i class="fas fa-user-md"></i></div>
                     <h5 class="card-title">View Provider Information</h5>
                     <a href="/provider_info" class="btn btn-outline-primary">Go</a>
                  </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center p-4">
-                    <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
-                    <h5 class="card-title">Logout</h5>
-                    <a href="/logout" class="btn btn-outline-danger">Log Out</a>
-                </div>
             </div>
 
         </div>
@@ -111,64 +98,6 @@
 </html>
 
 
-        .card-title {
-            margin-top: 10px;
-            font-size: 1.1rem;
-            color: #212529;
-        }
-
-        .icon {
-            font-size: 32px;
-            color: #0d6efd;
-        }
-
-        a.btn {
-            margin-top: 10px;
-        }
-    </style>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="container py-5">
-        <h2 class="text-center mb-5 dashboard-title">Welcome, {{ full_name }}!</h2>
-        <div class="row justify-content-center g-4">
-
-            <!-- View Alerts -->
-            <div class="col-md-4">
-                <div class="card text-center p-4">
-                    <div class="icon"><i class="fas fa-bell"></i></div>
-                    <h5 class="card-title">View Alerts</h5>
-                    <a href="/view_alerts" class="btn btn-outline-primary">Go</a>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center p-4">
-                    <div class="icon"><i class="fas fa-user-edit"></i></div>
-                    <h5 class="card-title">Edit Profile</h5>
-                    <a href="/edit_profile" class="btn btn-outline-primary">Go</a>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center p-4">
-                    <div class="icon"><i class="fas fa-user-md"></i></div>
-                    <h5 class="card-title">View Provider Information</h5>
-                    <a href="/provider_info" class="btn btn-outline-primary">Go</a>
-                 </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center p-4">
-                    <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
-                    <h5 class="card-title">Logout</h5>
-                    <a href="/logout" class="btn btn-outline-danger">Log Out</a>
-                </div>
-            </div>
-
-            
-
-        
 
         </div>
     </div>
