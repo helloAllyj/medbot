@@ -9,8 +9,13 @@ conn = sqlite3.connect(db_path)
 
 conn.execute('''
 CREATE TABLE IF NOT EXISTS medications (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    name TEXT,
+    dosage TEXT,
+    frequency TEXT,
+    start_date TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 )
 ''')
 
