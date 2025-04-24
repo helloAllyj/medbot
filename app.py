@@ -103,11 +103,20 @@ def register():
     return render_template('register.html', error=error)
 
 
+
+
 @app.route('/logout')
 def logout():
     session.clear()  
     return redirect(url_for('home'))  
 
+@app.route('/medications')
+def medications():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    # You can fetch the user's medications from the database here later
+    return render_template('medications.html')
 
 
 if __name__ == '__main__':
