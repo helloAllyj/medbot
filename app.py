@@ -194,5 +194,48 @@ def add_medication():
 
     return render_template('add_medication.html')
 
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit_profile():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    if request.method == 'POST':
+        new_first = request.form['first_name']
+        new_last = request.form['last_name']
+        new_phone = request.form['phone']
+
+        cursor.execute("""
+            UPDATE users
+            SET first_name = ?, last_name = ?, phone_number = ?
+            WHERE id = ?
+        """, (new_first, new_last, new_phone, user_id))
+        conn.commit()
+
+        # Update session data too
+        session['first_name'] = new_first
+        session['last_name'] = new_last
+
+        conn.close()
+        return redirect(url_for('patient_dashboard'))
+
+    # GET request: fetch existing user data
+    cursor.execute("SELECT first_name, last_name, phone_number FROM users WHERE id = ?", (user_id,))
+    user = cursor.fetchone()
+    conn.close()
+
+    if user:
+        user_data = {
+            'first_name': user['first_name'],
+            'last_name': user['last_name'],
+            'phone': user['phone_number']
+        }
+        return render_template('edit_profile.html', user=user_data)
+    else:
+        return redirect(url_for('login'))
+
 if __name__ == '__main__':
     app.run(debug=True)

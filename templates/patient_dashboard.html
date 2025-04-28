@@ -52,21 +52,24 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    
     <nav class="navbar navbar-light bg-white shadow-sm">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h4">MedBot </span>
+            <span class="navbar-brand mb-0 h4">MedBot</span>
             <div class="dropdown">
-                <div class="avatar dropdown-toggle" id="avatarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="avatar dropdown-toggle text-white bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                     id="avatarDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                     style="width: 40px; height: 40px; font-weight: bold; cursor: pointer;">
                     {{ session.first_name[0] }}{{ session.last_name[0] }}
                 </div>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="avatarDropdown">
-                    <li><a class="dropdown-item" href="/edit_profile"><i class="fas fa-user-edit me-2"></i>Edit Profile</a></li>
-                    <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="avatarDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+    
 
     <div class="container py-5 mt-4">
         <h2 class="text-center mb-5 dashboard-title">Welcome, {{ full_name }}!</h2>
