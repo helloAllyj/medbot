@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Providers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .search-bar, #search-section {
+            margin-top: 20px;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #0d6efd;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h4">MedBot</span>
+            <div class="dropdown">
+                <div class="avatar dropdown-toggle" id="avatarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ session.first_name[0] }}{{ session.last_name[0] }}
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="avatarDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="text-center mb-5">My Providers</h2>
+
+        <h4>Your Providers</h4>
+        <div class="card mt-3">
+            <div class="card-body">
+                <ul id="provider-list" class="list-group">
+                    <!-- JavaScript will populate this -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Buttons: Back to Dashboard and Add Provider -->
+        <div class="action-buttons d-flex justify-content-between mt-4">
+            <a href="{{ url_for('patient_dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+            <button class="btn btn-primary" onclick="showSearch()">Add Provider</button>
+        </div>
+
+        <!-- Search Section -->
+        <div id="search-section" style="display: none;">
+            <div class="search-bar mt-4">
+                <input type="text" id="provider-search" class="form-control" placeholder="Search for a provider..." oninput="searchProvider()">
+                <ul id="provider-suggestions" class="list-group mt-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSearch() {
+            document.getElementById('search-section').style.display = 'block';
+            document.getElementById('provider-search').focus();
+        }
+
+        function loadMyProviders() {
+            fetch('/my_providers')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('provider-list');
+                    list.innerHTML = '';
+                    if (data.length === 0) {
+                        list.innerHTML = '<li class="list-group-item text-muted text-center">No providers added yet.</li>';
+                    } else {
+                        data.forEach(provider => {
+                            const li = document.createElement('li');
+                            li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                            li.innerHTML = `
+                                <div>
+                                    <strong>${provider.name}</strong> (${provider.license_id})
+                                </div>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteProvider(${provider.id}, event)">
+                                    Delete
+                                </button>
+                            `;
+                            list.appendChild(li);
+                        });
+                    }
+                })
+                .catch(err => console.error('Error loading providers:', err));
+        }
+
+        function deleteProvider(providerId, event) {
+            event.preventDefault();
+            if (!confirm('Are you sure you want to remove this provider?')) return;
+
+            fetch(`/delete_provider/${providerId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    loadMyProviders();
+                } else {
+                    alert('Error: ' + (data.error || 'Could not delete provider.'));
+                }
+            })
+            .catch(err => {
+                console.error('Error deleting provider:', err);
+                alert('An unexpected error occurred.');
+            });
+        }
+
+        function searchProvider() {
+            const query = document.getElementById('provider-search').value;
+            const suggestions = document.getElementById('provider-suggestions');
+            if (!query) {
+                suggestions.innerHTML = '';
+                return;
+            }
+
+            fetch(`/search_provider?query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    suggestions.innerHTML = '';
+
+                    if (data.length === 0) {
+                        suggestions.innerHTML = '<li class="list-group-item text-muted">No providers found</li>';
+                    } else {
+                        data.forEach(provider => {
+                            const li = document.createElement('li');
+                            li.className = 'list-group-item list-group-item-action';
+                            li.textContent = `${provider.name} (${provider.license_id})`;
+                            li.onclick = () => addProvider(provider);
+                            suggestions.appendChild(li);
+                        });
+                    }
+                })
+                .catch(err => console.error('Error fetching providers:', err));
+        }
+
+        function addProvider(provider) {
+            fetch('/add_provider', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: provider.name,
+                    license_id: provider.license_id
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    loadMyProviders();
+                    document.getElementById('provider-search').value = '';
+                    document.getElementById('provider-suggestions').innerHTML = '';
+                    document.getElementById('search-section').style.display = 'none';
+                } else {
+                    alert('Error adding provider.');
+                }
+            })
+            .catch(err => console.error('Error adding provider:', err));
+        }
+
+        window.onload = loadMyProviders;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

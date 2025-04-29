@@ -36,6 +36,12 @@
         p.lead {
             color: #555;
         }
+
+        /* Input field focus styles */
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
     </style>
 </head>
 <body>
@@ -61,7 +67,7 @@
             </div>
 
             <div class="d-flex justify-content-between">
-                <a href="{{ url_for('patient_dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                <a href="{{ url_for('provider_dashboard') if user.role == 'provider' else url_for('patient_dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
         </form>

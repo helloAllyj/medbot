@@ -16,7 +16,7 @@
             <div class="mb-3">
                 <label for="role" class="form-label">Role</label>
                 <select class="form-select" name="role" id="role" required onchange="toggleAgeField()">
-                    <option value="">Select Role</option>
+                    <option value="" disabled selected>Select Role</option>
                     <option value="patient">Patient</option>
                     <option value="provider">Provider</option>
                 </select>
@@ -32,13 +32,6 @@
                 <input type="text" class="form-control" name="last_name" required>
             </div>
 
-            
-            <div class="mb-3" id="licenseField" style="display: none;">
-                <label for="license_id" class="form-label">License ID</label>
-                <input type="text" class="form-control" name="license_id">
-            </div>
-            
-
             <div class="mb-3" id="dobField" style="display: none;">
                 <label for="dob" class="form-label">Date of Birth</label>
                 <input type="date" class="form-control" name="dob">
@@ -50,11 +43,16 @@
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" name="password" required>
+                <label for="password_hash" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password_hash" required>
+            </div>
+            
+            <div class="mb-3" id="licenseField" style="display: none;">
+                <label for="license_id" class="form-label">License ID</label>
+                <input type="text" class="form-control" name="license_id">
             </div>
 
-             <div class="mb-3">
+            <div class="mb-3">
                 <label for="phone_number" class="form-label">Phone Number</label>
                 <input type="tel" class="form-control" name="phone_number" required pattern="^\+?[\d\s\(\)-]{7,15}$" title="Invalid Phone Number">
             </div>
@@ -72,11 +70,10 @@
             document.getElementById('licenseField').style.display = role === 'provider' ? 'block' : 'none';
         }
     </script>    
+
     <p class="mt-3 text-center">
         Already have an account? 
         <a href="{{ url_for('login') }}">Login here</a>.
     </p>
-   
 </body>
 </html>
-

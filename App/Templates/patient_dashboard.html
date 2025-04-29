@@ -69,13 +69,12 @@
             </div>
         </div>
     </nav>
-    
 
     <div class="container py-5 mt-4">
-        <h2 class="text-center mb-5 dashboard-title">Welcome, {{ full_name }}!</h2>
+        <h2 class="text-center mb-5 dashboard-title">Welcome, {{ session.first_name }} {{ session.last_name }}!</h2>
         <div class="row justify-content-center g-4">
 
-    
+            <!-- Medications -->
             <div class="col-md-4">
                 <div class="card text-center p-4">
                     <div class="icon"><i class="fas fa-pills"></i></div>
@@ -84,25 +83,28 @@
                 </div>
             </div>
 
-           
+            <!-- View Provider Information -->
             <div class="col-md-4">
                 <div class="card text-center p-4">
                     <div class="icon"><i class="fas fa-user-md"></i></div>
                     <h5 class="card-title">View Provider Information</h5>
-                    <a href="/provider_info" class="btn btn-outline-primary">Go</a>
-                 </div>
+                    <a href="{{ url_for('provider') }}" class="btn btn-outline-primary">Go</a>
+                </div>
+            </div>
+
+            <!-- View Alerts -->
+            <div class="col-md-4">
+                <div class="card text-center p-4">
+                    <div class="icon"><i class="fas fa-bell"></i></div>
+                    <h5 class="card-title">View Alerts</h5>
+                    <a href="{{ url_for('alerts') }}" class="btn btn-outline-primary">Go</a>
+                </div>
             </div>
 
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
 
-
-
-        </div>
-    </div>
 </body>
 </html>
